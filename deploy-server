@@ -2,14 +2,7 @@
 
 # Copies required files to the /etc/openvpn directory for usage
 
-SERVER=${1:-""}
-
-if [[ $1 -eq "" ]]
-then
-    echo "Server name is required."
-    echo "USAGE: ./deploy-server SERVER"
-    exit
-fi
+SERVER=$1
 
 sudo cp -r conf/ccd/ conf/${SERVER}.conf /etc/openvpn/
 

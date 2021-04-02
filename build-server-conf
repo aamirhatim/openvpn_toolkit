@@ -2,17 +2,10 @@
  
 # Generate OpenVPN server configuration files.
 
-SERVER_NAME=${1:-""}
+SERVER_NAME=$1
 SUBNET=$2
 PORT=$3
 PROTO=$4
-
-if [[ $1 -eq "" ]]
-then
-    echo "Server name is required."
-    echo "USAGE: ./build-server-conf SERVER_NAME SUBNET PORT PROTOCOL"
-    exit
-fi
 
 echo "port ${PORT}
 proto ${PROTO}

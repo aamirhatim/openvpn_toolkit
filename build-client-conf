@@ -2,17 +2,10 @@
  
 # Generate OpenVPN client configuration files.
  
-KEY_NAME=${1:-""}
+KEY_NAME=$1
 ADDRESS=$2
 PORT=$3
 PROTO=$4
-
-if [[ $1 -eq "" ]]
-then
-    echo "Client name is required."
-    echo "USAGE: ./build-client-conf CLIENT ADDRESS PORT PROTOCOL"
-    exit
-fi
  
 echo "client
 dev tun
