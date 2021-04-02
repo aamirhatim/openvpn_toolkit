@@ -1,0 +1,47 @@
+#!/bin/bash
+ 
+# Generate OpenVPN server configuration files.
+
+SERVER_NAME=${1:-""}
+SUBNET=$2
+PORT=$3
+PROTO=$4
+
+if [[ $1 -eq "" ]]
+then
+    echo "Server name is required."
+    echo "USAGE: ./build-server-conf SERVER_NAME SUBNET PORT PROTOCOL"
+    exit
+fi
+
+echo "port ${PORT}
+proto ${PROTO}
+dev tun
+server ${SUBNET} 255.255.255.0
+topology subnet
+ifconfig-pool-persist /var/log/openvpn/ipp.txt
+client-config-dir ccd
+route ${SUBNET} 255.255.255.0
+keepalive 10 60
+user nobody
+group nogroup
+persist-key
+persist-tun
+status /var/log/openvpn/openvpn-status.log
+verb 3
+sndbuf 0
+rcvbuf 0
+" > conf/${SERVER_NAME}.conf
+
+cat <(echo -e '<ca>') \
+    ca/keys/ca.crt \
+    <(echo -e '</ca>\n\n<cert>') \
+    ca/keys/${SERVER_NAME}.crt \
+    <(echo -e '</cert>\n\n<key>') \
+    ca/keys/${SERVER_NAME}.key \
+    <(echo -e '</key>\n\n<dh>') \
+    ca/keys/dh1024.pem \
+    <(echo -e '</dh>') \
+    >> conf/${SERVER_NAME}.conf
+
+echo -e "Server config file created for ${SERVER_NAME} at conf/${SERVER_NAME}.conf"

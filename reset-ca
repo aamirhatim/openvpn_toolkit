@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Cleans current ca config
+
+cd ca
+source ./vars
+./clean-all
+
+cd ../conf
+if [[ $(ls | wc -l) -gt 1 ]]
+then
+    rm -v $(ls --ignore="ccd")
+fi
+
+if [[ $(ls ccd | wc -l) -gt 0 ]]
+then
+    rm -v ccd/*
+fi
+
+echo "CA has been reset"

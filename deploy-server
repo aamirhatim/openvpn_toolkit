@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Copies required files to the /etc/openvpn directory for usage
+
+SERVER=${1:-""}
+
+if [[ $1 -eq "" ]]
+then
+    echo "Server name is required."
+    echo "USAGE: ./deploy-server SERVER"
+    exit
+fi
+
+sudo cp -r conf/ccd/ conf/${SERVER}.conf /etc/openvpn/
+
+echo "Files copied to /etc/openvpn/
+
+To start VPN server: sudo service openvpn@${SERVER} start
+To stop VPN server: sudo service openvpn@${SERVER} stop"

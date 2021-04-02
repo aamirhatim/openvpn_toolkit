@@ -1,0 +1,42 @@
+#!/bin/bash
+ 
+# Generate OpenVPN client configuration files.
+ 
+KEY_NAME=${1:-""}
+ADDRESS=$2
+PORT=$3
+PROTO=$4
+
+if [[ $1 -eq "" ]]
+then
+    echo "Client name is required."
+    echo "USAGE: ./build-client-conf CLIENT ADDRESS PORT PROTOCOL"
+    exit
+fi
+ 
+echo "client
+dev tun
+proto ${PROTO}
+connect-timeout 5
+connect-retry 2
+remote ${ADDRESS} ${PORT}
+resolv-retry infinite
+nobind
+user nobody
+group nogroup
+persist-key
+persist-tun
+remote-cert-tls server
+verb 3
+" > conf/${KEY_NAME}.conf
+ 
+cat <(echo -e '<ca>') \
+    ca/keys/ca.crt \
+    <(echo -e '</ca>\n\n<cert>') \
+    ca/keys/${KEY_NAME}.crt \
+    <(echo -e '</cert>\n\n<key>') \
+    ca/keys/${KEY_NAME}.key \
+    <(echo -e '</key>') \
+    >> conf/${KEY_NAME}.conf
+ 
+echo -e "Client config file created for ${KEY_NAME} at conf/${KEY_NAME}.conf"
