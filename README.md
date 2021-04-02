@@ -8,8 +8,10 @@ Make sure you have `openvpn` and `easy-rsa` installed on your PC: `sudo apt inst
 
 ## Setup
 
-1. Navigate to the `ca/` directory and edit the `vars` file with your config.
-2. Run the `clean-all` script.
+1. If they do not exist, create `conf/` and `conf/ccd` empty directories.
+2. Verify that your `/etc/openvpn/` directory constains a directory called `client`. If it doesn't exist, create it.
+3. Navigate to the `ca/` directory and edit the `vars` file with your config.
+4. Run the `clean-all` script.
 
 ### Creating a certificate authority
 
