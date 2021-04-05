@@ -1,0 +1,33 @@
+#!/bin/bash
+
+NAME=$1
+PKI_PATH="../ca/pki"
+CONF_PATH="conf"
+
+source vars
+echo "client
+dev tun
+proto $OVPN_PROTO
+connect-timeout 5
+connect-retry 2
+remote $OVPN_SERVER_ADDR $OVPN_PORT
+resolv-retry infinite
+nobind
+user nobody
+group nogroup
+persist-key
+persist-tun
+remote-cert-tls server
+verb 3
+" > $CONF_PATH/$NAME.conf
+
+cat <(echo -e '<ca>') \
+    $PKI_PATH/ca.crt \
+    <(echo -e '</ca>\n\n<cert>') \
+    $PKI_PATH/issued/$NAME.crt \
+    <(echo -e '</cert>\n\n<key>') \
+    $PKI_PATH/private/$NAME.key \
+    <(echo -e '</key>') \
+    >> $CONF_PATH/$NAME.conf
+
+echo -e "Client config file created for $NAME at $CONF_PATH/$NAME.conf"

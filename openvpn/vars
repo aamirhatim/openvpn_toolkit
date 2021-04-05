@@ -1,0 +1,12 @@
+# These are the values that will be used to generate OpenVPN
+# config files. Edit these to match your setup. The scripts
+# in this directory will source this file before doing
+# anything else.
+
+export OVPN_SERVER_ADDR="0.0.0.0"
+export OVPN_SUBNET="10.8.0.0"
+export OVPN_MASK="255.255.255.0"
+export OVPN_PORT="1194"
+export OVPN_PROTO="tcp"
+
+export OVPN_DEPLOY_PATH="/etc/openvpn"

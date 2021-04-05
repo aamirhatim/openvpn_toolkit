@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Copies required files to the OVPN_DEPLOY_PATH directory for usage
+
+SERVER=$1
+
+source vars
+sudo cp -r conf/ccd/ conf/$SERVER.conf $OVPN_DEPLOY_PATH
+
+echo "Files copied to $OVPN_DEPLOY_PATH
+
+To start VPN server: sudo service openvpn@$SERVER start
+To stop VPN server: sudo service openvpn@$SERVER stop"

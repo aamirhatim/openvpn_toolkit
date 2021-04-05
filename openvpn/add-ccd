@@ -1,0 +1,11 @@
+#!/bin/bash
+ 
+# Adds client config to ccd folder for setting static IPs
+
+NAME=$1
+ADDRESS=$2
+CCD_PATH="conf/ccd"
+
+source vars
+echo "ifconfig-push $ADDRESS $OVPN_MASK" > $CCD_PATH/$NAME
+echo "Client $NAME given static IP $ADDRESS"

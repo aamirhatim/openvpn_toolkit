@@ -1,0 +1,38 @@
+#!/bin/bash
+
+NAME=$1
+PKI_PATH="../ca/pki"
+CONF_PATH="conf"
+
+source vars
+echo "port $OVPN_PORT
+proto $OVPN_PROTO
+dev tun
+server $OVPN_SUBNET $OVPN_MASK
+topology subnet
+ifconfig-pool-persist /var/log/openvpn/ipp.txt
+client-config-dir ccd
+route $OVPN_SUBNET $OVPN_MASK
+keepalive 10 60
+user nobody
+group nogroup
+persist-key
+persist-tun
+status /var/log/openvpn/openvpn-status.log
+verb 3
+sndbuf 0
+rcvbuf 0
+" > $CONF_PATH/$NAME.conf
+
+cat <(echo -e '<ca>') \
+    $PKI_PATH/ca.crt \
+    <(echo -e '</ca>\n\n<cert>') \
+    $PKI_PATH/issued/$NAME.crt \
+    <(echo -e '</cert>\n\n<key>') \
+    $PKI_PATH/private/$NAME.key \
+    <(echo -e '</key>\n\n<dh>') \
+    $PKI_PATH/dh.pem \
+    <(echo -e '</dh>') \
+    >> $CONF_PATH/$NAME.conf
+
+echo -e "Server config file created for $NAME at $CONF_PATH/$NAME.conf"
