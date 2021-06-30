@@ -36,7 +36,7 @@ For more details on what can go in the conf files, look at `sample-client.conf` 
 **Client config:** `build-client-conf` 
 Args:
 - KEY_NAME
-- ADDRESS
+- SERVER_ADDRESS
 - PORT
 - PROTOCOL
 
@@ -49,7 +49,7 @@ Args:
 - PORT
 - PROTOCOL
 
-Example: `./build-server-conf server 1194 tcp 10.8.0.0`
+Example: `./build-server-conf server 10.8.0.0 1194 tcp`
 
 **Set static IP for clients**: `add-ccd`
 Args:
@@ -67,16 +67,16 @@ Args:
 - SERVER
 
 Example: `./deploy-server server`
-- Start server: `sudo service openvpn@<SERVER_NAME> start`
-- Stop server: `sudo service openvpn@<SERVER_NAME> stop`
+- Start server: `sudo systemctl start openvpn-server@<SERVER_NAME>`
+- Stop server: `sudo systemctl stop openvpn-server@<SERVER_NAME>`
 
 **Deploy VPN client**: `deploy-client` copies client config to main openvpn directory.
 Args:
 - CLIENT
 
 Example: `./deploy-client client1`
-- Start client: `sudo service openvpn@<CLIENT_NAME> start`
-- Stop client: `sudo service openvpn@<CLIENT_NAME> stop`
+- Start client: `sudo systemctl start openvpn-client@<CLIENT_NAME>`
+- Stop client: `sudo systemctl stop openvpn-client@<CLIENT_NAME>`
 
 ## Other tips
 
