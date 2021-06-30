@@ -15,6 +15,7 @@ topology subnet
 ifconfig-pool-persist /var/log/openvpn/ipp.txt
 client-config-dir ccd
 route ${SUBNET} 255.255.255.0
+client-to-client
 keepalive 10 60
 user nobody
 group nogroup
