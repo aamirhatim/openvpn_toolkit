@@ -8,5 +8,5 @@ sudo cp conf/${CLIENT}.conf /etc/openvpn/client/
 
 echo "Client config copied to /etc/openvpn/client/
 
-To start VPN client: sudo service openvpn@${CLIENT} start
-To stop VPN client: sudo service openvpn@${CLIENT} stop"
+To start VPN client: sudo systemctl start openvpn-client@${CLIENT}
+To stop VPN client: sudo systemctl stop openvpn-client@${CLIENT}"

@@ -4,9 +4,9 @@
 
 SERVER=$1
 
-sudo cp -r conf/ccd/ conf/${SERVER}.conf /etc/openvpn/
+sudo cp -r conf/ccd/ conf/${SERVER}.conf /etc/openvpn/server/
 
-echo "Files copied to /etc/openvpn/
+echo "Files copied to /etc/openvpn/server/
 
-To start VPN server: sudo service openvpn@${SERVER} start
-To stop VPN server: sudo service openvpn@${SERVER} stop"
+To start VPN server: sudo systemctl start openvpn-server@${SERVER}
+To stop VPN server: sudo systemctl stop openvpn-server@${SERVER}"
